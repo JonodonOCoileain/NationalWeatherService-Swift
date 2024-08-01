@@ -12,7 +12,7 @@ public struct Forecast: Decodable {
         case updated, generatedAt, validTimes, elevation, periods
     }
 
-    public let updated: Date
+    public let updated: Date?
     public let generatedAt: Date
 
     // TODO: Handle valid times interval
