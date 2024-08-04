@@ -14,6 +14,8 @@ import GEOSwift
 public class NationalWeatherService {
     // Definitions
     public typealias GeoJSONHandler = (Result<GeoJSON, Error>) -> Void
+    
+    public var lastReportingOfficeURL: String?
 
     private let decoder: JSONDecoder = {
         let _decoder = JSONDecoder()
@@ -72,6 +74,9 @@ public class NationalWeatherService {
                    let featureProperties = feature.untypedProperties {
                     do {
                         let data = try JSONSerialization.data(withJSONObject: featureProperties, options: [])
+                        if let reportingOfficeURL = featureProperties["forecastOffice"] as? String {
+                            self.lastReportingOfficeURL = reportingOfficeURL
+                        }
                         handler(.success(try self.decoder.decode(type, from: data)))
                     } catch {
                         handler(.failure(error))
