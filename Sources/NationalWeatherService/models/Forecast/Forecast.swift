@@ -20,9 +20,6 @@ public struct Forecast: Decodable {
     public let elevation: Measurement<UnitLength>
     public let periods: [Period]
     
-    // Credited separately
-    public var forecastOffice: String?
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
