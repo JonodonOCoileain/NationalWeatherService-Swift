@@ -10,12 +10,13 @@ import Foundation
 extension Forecast {
     public struct Period: Decodable, Identifiable {
         public enum CodingKeys: String, CodingKey {
-            case name, startTime, endTime, isDaytime
+            case cwa, name, startTime, endTime, isDaytime
             case temperature, temperatureUnit, windSpeed, windDirection
             case icon, shortForecast, detailedForecast
         }
 
         public let id = UUID()
+        public let cwa: String?
         public let name: String?
         public let date: DateInterval
         public let isDaytime: Bool
@@ -31,6 +32,7 @@ extension Forecast {
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
 
+            self.cwa = try container.decodeIfPresent(String.self, forKey: .cwa)
             self.name = try container.decodeIfPresent(String.self, forKey: .name)
 
             let startTime = try container.decode(Date.self, forKey: .startTime)
